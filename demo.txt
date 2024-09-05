@@ -1,1 +1,3 @@
 It's a empty file
+
+Yeah, fine in VS code.
