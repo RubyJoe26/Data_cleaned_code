@@ -45,6 +45,9 @@ if "Address" in df.columns:
         print(f"Error during splitting: {e}")
 else:
     print("Error: 'Address' column does not exist in the DataFrame.")
+
+df = df.replace("N/a", "")
+df = df.fillna('')
 print(df)
 
 
