@@ -16,7 +16,8 @@ import pandas as pd
 file_path = r'C:\Users\ELCOT\Desktop\Customer call\Customer Call List.xlsx'
 df = pd.read_excel(file_path)
 
-# print("Columns in the DataFrame:", df.columns)
+pd.set_option('display.max_columns', None)  # Show all columns
+pd.set_option('display.max_rows', None)  #Show all values
 
 df = df.drop_duplicates()
 
@@ -25,17 +26,27 @@ if "Not_Useful_Column" in df.columns:
 else:
     print("Warning: 'Not_Useful_Column' does not exist in the DataFrame.")
 
-if "last_name" in df.columns:
-    df["last_name"] = df["last_name"].str.replace("[._/]", "", regex=True)
+if "Last_Name" in df.columns:
+    df["Last_Name"] = df["Last_Name"].str.replace("[._/]", "", regex=True)
 else:
-    print("Warning: 'last_name' column does not exist in the DataFrame.")
+    print("Warning: 'Last_Name' column does not exist in the DataFrame.")
 
-if "phone_number" in df.columns:
-    df["phone_number"] = df["phone_number"].str.replace("nan--|Na--", "", regex=True)
+if "Phone_Number" in df.columns:
+    df["Phone_Number"] = df["Phone_Number"].str.replace("nan--|Na--", "", regex=True)
 else:
-    print("Error: 'phone_number' column does not exist in the DataFrame.")
+    print("Error: 'Phone_Number' column does not exist in the DataFrame.")
 
+if "Address" in df.columns:
+    try:
+        # Corrected: Use 'n=2' as a keyword argument to split the string into 3 parts
+        df[["Street Address", "State", "Zip_code"]] = df["Address"].str.split(',', n=2, expand=True)
+        print("Address split successfully!")
+    except ValueError as e:
+        print(f"Error during splitting: {e}")
+else:
+    print("Error: 'Address' column does not exist in the DataFrame.")
 print(df)
+
 
 
 
